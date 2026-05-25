@@ -21,6 +21,15 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+               - name: Verify secrets are loaded
+               env:
+                 REQRES_API_KEY: ${{ secrets.REQRES_API_KEY }}
+               run: |
+                 if [ -z "$REQRES_API_KEY" ]; then
+                   echo "ERROR: REQRES_API_KEY is empty"
+                 else
+                   echo "SUCCESS: REQRES_API_KEY is loaded"
+                 fi
 
       - name: Run API tests
         env:
